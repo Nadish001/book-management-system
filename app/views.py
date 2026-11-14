@@ -79,15 +79,17 @@ def addbook(request):
     return render(request,'addbook.html',{'form':form})
 
 def dashboard(request):
-    pass
+    return render(request,'dashboard.html')
 
 def managepage(request):
     book = Books.objects.all()
     return render(request,'manage.html',{'book':book})
 
 def viewbook(request,bid):
-    pass
+    return render(request,'viewbook.html')
+
 def editbook(request,bid):
-    pass
+    return render(request,'editbook.html')
+
 def deletebook(request,bid):
     pass
