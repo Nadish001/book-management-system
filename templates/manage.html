@@ -1,0 +1,92 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<div class="manage">
+    <h1>Manage Books</h1>
+
+    <div class="actions">
+        <a href="{% url 'addbook' %}" class="btn btn-book">Add Book</a>
+        <a href="{% url 'addauthor' %}" class="btn btn-author">Add Author</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Cover</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in book %}
+            <tr>
+                <td>
+                    {% if b.cover_pic %}
+                        <img src="/library/{{ b.cover_pic }}" alt="{{ b.title }}">
+                        <p>{{ b.title }}</p>
+                    {% else %}
+                        No cover
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'viewbook' b.id %}">View</a></td>
+                <td><a href="{% url 'editbook' b.id %}">Edit</a></td>
+                <td><a href="{% url 'deletebook' b.id %}">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No books found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+        .manage { 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            min-height: auto;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background-color: white;
+            padding: 20px;
+         }
+        table { border-collapse: collapse; 
+            width: 100%; }
+        th, td { 
+            border: 1px solid #ccc;
+             padding: 10px; 
+             text-align: center; 
+            }
+        th {
+             background: #f2f2f2; 
+            }
+        img {
+             width: 60px;
+              height: 80px;
+               object-fit: cover;
+             }
+        .actions { 
+            margin-bottom: 16px;
+            display: flex; 
+            gap: 12px; 
+            flex-direction: row;
+            }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-book { background-color: #2e7d32; }
+        .btn-book:hover { background-color: #1b5e20; }
+        .btn-author { background-color: #1565c0; }
+        .btn-author:hover { background-color: #0d47a1; }
+</style>
+{%endblock%}
+

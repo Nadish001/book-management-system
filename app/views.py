@@ -42,14 +42,6 @@ def logoutpage(request):
     messages.success(request,"user loggedout successfully ")
     return redirect(homepage)
 
-def dashboard(request):
-    pass
-
-def managepage(request):
-    pass
-
-
-
 def profilepage(request):
     pro = Profile.objects.get(user = request.user)
     return render(request,'profile.html',{'pro':pro})
@@ -57,10 +49,45 @@ def profilepage(request):
 def profileedit(request):
     pro = Profile.objects.get(user=request.user)
     if request.method =='POST':
-        forms = Profileform(request.POST,request.FILES,instance=pro)
-        if forms.is_valid():
-            forms.save()
+        form = Profileform(request.POST,request.FILES,instance=pro)
+        if form.is_valid():
+            form.save()
             return redirect(profilepage)
     else:
-        forms = Profileform(instance=pro)
-    return render(request,'proedit.html',{"forms":forms})
+        form = Profileform(instance=pro)
+    return render(request,'profileedit.html',{"form":form})
+
+
+
+def addauthor(request):
+    if request.method =='POST':
+        form = Authorform(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(managepage)
+    else:
+        form = Authorform()
+    return render(request,'addauthor.html',{'form':form})
+def addbook(request):
+    if request.method =='POST':
+        form = Bookform(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(managepage)
+    else:
+        form = Bookform()
+    return render(request,'addbook.html',{'form':form})
+
+def dashboard(request):
+    pass
+
+def managepage(request):
+    book = Books.objects.all()
+    return render(request,'manage.html',{'book':book})
+
+def viewbook(request,bid):
+    pass
+def editbook(request,bid):
+    pass
+def deletebook(request,bid):
+    pass

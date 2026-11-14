@@ -30,3 +30,13 @@ class Profileform(forms.ModelForm):
                 "phone must be equalto 10 digits."
             )
         return cleaned_data
+
+class Authorform(forms.ModelForm):
+   class Meta:
+       model = Author
+       fields = "__all__"
+
+class Bookform(forms.ModelForm):
+    class Meta:
+        model = Books
+        fields = "__all__"

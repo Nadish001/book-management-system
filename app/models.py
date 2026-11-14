@@ -20,11 +20,23 @@ class Author(models.Model):
 
 
 class Books(models.Model):
+    GENRE_CHOICES = [
+        ('fantasy', 'Fantasy'),
+        ('scifi', 'Science Fiction'),
+        ('mystery', 'Mystery / Thriller'),
+        ('romance', 'Romance'),
+        ('history', 'History'),
+        ('biography', 'Biography / Memoir'),
+        ('selfhelp', 'Self-help'),
+        ('business', 'Business / Finance'),
+        ('tech', 'Technology / Programming'),
+        ('other', 'Other'),
+    ]
     title = models.CharField(max_length=50)
     des = models.TextField()
+    genre = models.CharField(max_length=20, choices=GENRE_CHOICES, default='other')
+    author = models.CharField(max_length=20)
     price = models.IntegerField()
-    author = models.ForeignKey(Author,on_delete=models.CASCADE)
-    total = models.IntegerField()
-    available = models.IntegerField()
+    cover_pic = models.ImageField(upload_to='coverpage',blank=True)
     def __str__(self):
         return self.user
