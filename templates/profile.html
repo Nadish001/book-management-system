@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<link rel="stylesheet" href="/static/css/profile.css">
+{% load static %}
+
+<!-- <link rel="stylesheet" href="/static/css/profile.css"> -->
+<link rel="stylesheet" href="{% static 'css/profile.css' %}?v=2">
+
 <div class="card">
     <div class="top">
         <div class="topleft">
