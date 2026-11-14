@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/profile.css">
+<div class="card">
+    <div class="top">
+        <div class="topleft">
+            <div class="l1">
+                <img src="/library/{{pro.pro_pic}}" alt="heii">
+            </div>
+            <div class="l2">
+                <h2>{{pro.user}}</h2>
+                <p>{{pro.email}}</p>
+                <p>{{pro.phone}}</p>
+            </div>            
+        </div>
+        <div class="topright">
+            <a href="{% url 'proedit' %}"><button>Edit profile</button></a>
+        </div>
+    </div>
+    <div class="mid">
+    <h3>Bio</h3>
+    <p>{{pro.bio}}</p>
+    </div>
+    <div class="bot">
+
+    </div>
+</div>
+
+{% endblock %}
