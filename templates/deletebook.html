@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .bk-card { background: #fff; border-radius: 12px; padding: 32px; max-width: 480px; margin: 48px auto; text-align: center; }
+    .bk-card h1 { margin: 0 0 8px; }
+    .bk-muted { margin: 0 0 20px; color: #666; }
+    .bk-card img { width: 120px; border-radius: 8px; display: block; margin: 0 auto 12px; }
+    .bk-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .bk-btn { flex: 1; text-align: center; padding: 14px; border-radius: 8px; font-size: 15px; cursor: pointer; text-decoration: none; }
+    .bk-danger { background: #b3261e; color: #fff; border: 1px solid #b3261e; }
+    .bk-danger:hover { background: #8c1d18; }
+    .bk-light { background: #fff; color: #1f7068; border: 1px solid #1f7068; }
+    .bk-light:hover { background: #eef5f4; }
+</style>
+
+<div class="bk-card">
+    <h1>Delete book</h1>
+    <p class="bk-muted">Are you sure you want to delete this book? This cannot be undone.</p>
+
+    {% if book.cover_pic %}
+        <img src="/library/{{ book.cover_pic.url }}" alt="{{ book.title }}">
+    {% endif %}
+    <strong>{{ book.title }}</strong>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="bk-actions">
+            <button type="submit" class="bk-btn bk-danger">Yes, delete</button>
+            <a href="{% url 'managepage' %}" class="bk-btn bk-light">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

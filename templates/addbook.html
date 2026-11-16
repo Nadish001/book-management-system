@@ -1,8 +1,46 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token%}
-    {{form}}
-    <input type="submit" value="Add">
-</form>
+<style>
+    .bk-card { background: #fff; border-radius: 12px; padding: 32px; max-width: 480px; margin: 48px auto; }
+    .bk-card h1 { margin: 0 0 4px; }
+    .bk-muted { margin: 0 0 24px; color: #666; }
+    .bk-field { margin-bottom: 18px; }
+    .bk-field label { display: block; margin-bottom: 6px; }
+    .bk-field input[type="text"],
+    .bk-field input[type="number"],
+    .bk-field select,
+    .bk-field textarea { width: 100%; padding: 12px; border: 1px solid #777; border-radius: 8px; font-size: 15px; box-sizing: border-box; }
+    .bk-field textarea { min-height: 110px; }
+    .bk-err { display: block; color: #b00020; margin-top: 4px; }
+    .bk-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .bk-btn { flex: 1; text-align: center; padding: 14px; border-radius: 8px; background: #1f7068; color: #fff; border: 1px solid #1f7068; font-size: 15px; cursor: pointer; text-decoration: none; }
+    .bk-btn:hover { background: #17554f; }
+    .bk-btn-light { background: #fff; color: #1f7068; }
+    .bk-btn-light:hover { background: #eef5f4; }
+</style>
+
+<div class="bk-card">
+    <h1>Add a book</h1>
+    <p class="bk-muted">Enter the details of the new book.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="bk-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+                <small class="bk-err">{{ error }}</small>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div class="bk-actions">
+            <button type="submit" class="bk-btn">Add book</button>
+            <a href="{% url 'managepage' %}" class="bk-btn bk-btn-light">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

@@ -86,10 +86,23 @@ def managepage(request):
     return render(request,'manage.html',{'book':book})
 
 def viewbook(request,bid):
-    return render(request,'viewbook.html')
+    book = Books.objects.get(id=bid)
+    return render(request, 'viewbook.html', {'book': book})
 
 def editbook(request,bid):
-    return render(request,'editbook.html')
+    book = Books.objects.get(id=bid)
+    if request.method == 'POST':
+        form = Bookform(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect(managepage)
+    else:
+        form = Bookform(instance=book)
+    return render(request, 'editbook.html', {'form': form, 'book': book})
 
-def deletebook(request,bid):
-    pass
+def deletebook(request, bid):
+    book =Books.objects.get(id = bid)
+    if request.method == 'POST':
+        book.delete()
+        return redirect(managepage)
+    return render(request, 'deletebook.html', {'book': book})

@@ -1,4 +1,56 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block content %}
+<style>
+    .bk-card { background: #fff; border-radius: 12px; padding: 32px; max-width: 760px; margin: 48px auto; }
+    .bk-view { display: flex; gap: 32px; align-items: flex-start; }
+    .bk-cover img { width: 200px; border-radius: 8px; display: block; }
+    .bk-nocover { width: 200px; height: 280px; border-radius: 8px; background: #eee; display: flex; align-items: center; justify-content: center; color: #666; }
+    .bk-info { flex: 1; }
+    .bk-info h1 { margin: 0 0 4px; }
+    .bk-muted { margin: 0 0 20px; color: #666; }
+    .bk-row { margin-bottom: 14px; }
+    .bk-label { display: block; font-size: 14px; color: #666; margin-bottom: 2px; }
+    .bk-actions { margin-top: 28px; display: flex; gap: 12px; }
+    .bk-btn { display: inline-block; padding: 12px 28px; border-radius: 8px; background: #1f7068; color: #fff; text-decoration: none; }
+    .bk-btn:hover { background: #17554f; }
+    .bk-btn-light { background: #fff; color: #1f7068; border: 1px solid #1f7068; }
+    .bk-btn-light:hover { background: #eef5f4; }
+    @media (max-width: 600px) { .bk-view { flex-direction: column; } }
+</style>
+
+<div class="bk-card">
+    <div class="bk-view">
+        <div class="bk-cover">
+            {% if book.cover_pic %}
+                <img src="/library/{{book.cover_pic }}" alt="{{ book.title }}">
+            {% else %}
+                <div class="bk-nocover">No cover</div>
+            {% endif %}
+        </div>
+
+        <div class="bk-info">
+            <h1>{{ book.title }}</h1>
+            <p class="bk-muted">by {{ book.author }}</p>
+
+            <div class="bk-row">
+                <span class="bk-label">Genre</span>
+                {{ book.get_genre_display }}
+            </div>
+            <div class="bk-row">
+                <span class="bk-label">Price</span>
+                {{ book.price }}
+            </div>
+            <div class="bk-row">
+                <span class="bk-label">Description</span>
+                {{ book.des|linebreaksbr }}
+            </div>
+        </div>
+    </div>
+
+    <div class="bk-actions">
+        <a href="{% url 'editbook' book.id %}" class="bk-btn">Edit</a>
+        <a href="{% url 'managepage' %}" class="bk-btn bk-btn-light">Back</a>
+    </div>
+</div>
 {% endblock %}
